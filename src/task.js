@@ -1,30 +1,24 @@
-const {
-	INPUT_MUST_BE_ARRAY_OF_PROMISES,
-	NO_PROMISES,
-	EXCEEDS_MAX_REJECTED_NUM,
-	SUCCESS,
-	MAX_REJECTED_NUM_MUST_BE_NUMBER
-} = require('../constants.js');
+const messageText = require('../constants.js');
 
 function resolvedWithRejectionNumCheck(promisesToHandle, maxRejectedNum) {
 	return new Promise((resolve, reject) => {
 		if (typeof maxRejectedNum !== 'number') {
-			reject(MAX_REJECTED_NUM_MUST_BE_NUMBER);
+			reject(messageText.MAX_REJECTED_NUM_MUST_BE_NUMBER);
 		}
 		if (promisesToHandle.length == 0) {
-			reject(NO_PROMISES);
+			reject(messageText.NO_PROMISES);
 		}
 		if (Array.isArray(promisesToHandle) === false || promisesToHandle.every(item => item instanceof Promise) === false) {
-			reject(INPUT_MUST_BE_ARRAY_OF_PROMISES);
+			reject(messageText.INPUT_MUST_BE_ARRAY_OF_PROMISES);
 		}
 		Promise.allSettled(promisesToHandle)
 			.then(results => results.filter(result => result.status === "rejected"))
 			.then(rejected => {
 				if (rejected.length <= maxRejectedNum) {
-					resolve(SUCCESS);
+					resolve(messageText.SUCCESS);
 				}
 				else {
-					reject(EXCEEDS_MAX_REJECTED_NUM);
+					reject(messageText.EXCEEDS_MAX_REJECTED_NUM);
 				}
 			})
 	})

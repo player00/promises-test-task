@@ -1,18 +1,12 @@
 const resolvedWithRejectionNumCheck = require('../src/task.js')
-const {
-	INPUT_MUST_BE_ARRAY_OF_PROMISES,
-	NO_PROMISES,
-	EXCEEDS_MAX_REJECTED_NUM,
-	SUCCESS,
-	MAX_REJECTED_NUM_MUST_BE_NUMBER
-} = require('../constants.js');
+const messageText = require('../constants.js');
 
 describe('resolvedWithRejectionNumCheck', () => {
 	it('should resolve when all promises are resolved', () => {
 		const resolvedPromise = Promise.resolve('success')
 		const promises = [resolvedPromise, resolvedPromise, resolvedPromise]
 		const maxRejectedNum = 2
-		const expectedOutput = SUCCESS
+		const expectedOutput = messageText.SUCCESS
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -24,7 +18,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, resolvedPromise, rejectedPromise]
 		const maxRejectedNum = 2
-		const expectedOutput = SUCCESS
+		const expectedOutput = messageText.SUCCESS
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -36,7 +30,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, resolvedPromise, rejectedPromise]
 		const maxRejectedNum = 1
-		const expectedOutput = SUCCESS
+		const expectedOutput = messageText.SUCCESS
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -48,7 +42,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, rejectedPromise, rejectedPromise]
 		const maxRejectedNum = 1
-		const expectedOutput = EXCEEDS_MAX_REJECTED_NUM
+		const expectedOutput = messageText.EXCEEDS_MAX_REJECTED_NUM
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -58,7 +52,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 	it('should reject for empty array of promises', () => {
 		const promises = []
 		const maxRejectedNum = 1
-		const expectedOutput = NO_PROMISES
+		const expectedOutput = messageText.NO_PROMISES
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -68,7 +62,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 	it('should reject when promisesToHandle contains invalid type', () => {
 		const promises = ['resolvedPromise', 'rejectedPromise']
 		const maxRejectedNum = 1
-		const expectedOutput = INPUT_MUST_BE_ARRAY_OF_PROMISES
+		const expectedOutput = messageText.INPUT_MUST_BE_ARRAY_OF_PROMISES
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -79,7 +73,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const resolvedPromise = Promise.resolve('success')
 		const promises = [resolvedPromise, resolvedPromise]
 		const maxRejectedNum = '1'
-		const expectedOutput = MAX_REJECTED_NUM_MUST_BE_NUMBER
+		const expectedOutput = messageText.MAX_REJECTED_NUM_MUST_BE_NUMBER
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
