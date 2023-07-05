@@ -1,14 +1,20 @@
 const resolvedWithRejectionNumCheck = require('../src/task.js')
+const {
+	INPUT_MUST_BE_ARRAY_OF_PROMISES,
+	NO_PROMISES,
+	EXCEEDS_MAX_REJECTED_NUM,
+	SUCCESS
+} = require('../constants.js');
 
 describe('resolvedWithRejectionNumCheck', () => {
 	it('should give proper message for empty array', () => {
 		const promises = []
 		const maxRejectedNum = 1
-		const expectedOutput = 'There was no promises'
+		const expectedOutput = NO_PROMISES
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
-		expect(output).resolves.toEqual(expectedOutput)
+		expect(output).rejects.toEqual(expectedOutput)
 	})
 
 	it('should resolve when amount of rejected promises equals maxRejectedNum', () => {
@@ -16,7 +22,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, resolvedPromise, rejectedPromise]
 		const maxRejectedNum = 1
-		const expectedOutput = 'Success'
+		const expectedOutput = SUCCESS
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -28,7 +34,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, resolvedPromise, rejectedPromise]
 		const maxRejectedNum = 2
-		const expectedOutput = 'Success'
+		const expectedOutput = SUCCESS
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -40,7 +46,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const rejectedPromise = Promise.reject('fail')
 		const promises = [resolvedPromise, rejectedPromise, rejectedPromise]
 		const maxRejectedNum = 1
-		const expectedOutput = 'Amount of rejected promises from promisesToHandle exceeds the maxRejectedNum value'
+		const expectedOutput = EXCEEDS_MAX_REJECTED_NUM
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
@@ -50,7 +56,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 	it('should reject when promisesToHandle contains invalid type', () => {
 		const promises = ['resolvedPromise', 'rejectedPromise']
 		const maxRejectedNum = 1
-		const expectedOutput = 'Input must be an array of Promises'
+		const expectedOutput = INPUT_MUST_BE_ARRAY_OF_PROMISES
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 
