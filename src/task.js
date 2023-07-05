@@ -8,7 +8,9 @@ function resolvedWithRejectionNumCheck(promisesToHandle, maxRejectedNum) {
 		if (promisesToHandle.length == 0) {
 			reject(messageText.NO_PROMISES);
 		}
-		if (!Array.isArray(promisesToHandle) || !promisesToHandle.every(item => item instanceof Promise)) {
+		const isArray = Array.isArray(promisesToHandle)
+		const isArrayOfPromises = promisesToHandle.every(item => item instanceof Promise)
+		if (!isArray || !isArrayOfPromises) {
 			reject(messageText.INPUT_MUST_BE_ARRAY_OF_PROMISES);
 		}
 		Promise.allSettled(promisesToHandle)
