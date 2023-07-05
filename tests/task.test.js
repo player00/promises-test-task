@@ -47,7 +47,7 @@ describe('resolvedWithRejectionNumCheck', () => {
 		expect(output).rejects.toEqual(expectedOutput)
 	})
 
-	it('should reject promisesToHandle contains invalid type', () => {
+	it('should reject when promisesToHandle contains invalid type', () => {
 		const promises = ['resolvedPromise', 'rejectedPromise']
 		const maxRejectedNum = 1
 		const expectedOutput = 'Input must be an array of Promises'
