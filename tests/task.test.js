@@ -3,7 +3,8 @@ const {
 	INPUT_MUST_BE_ARRAY_OF_PROMISES,
 	NO_PROMISES,
 	EXCEEDS_MAX_REJECTED_NUM,
-	SUCCESS
+	SUCCESS,
+	MAX_REJECTED_NUM_MUST_BE_NUMBER
 } = require('../constants.js');
 
 describe('resolvedWithRejectionNumCheck', () => {
@@ -68,6 +69,17 @@ describe('resolvedWithRejectionNumCheck', () => {
 		const promises = ['resolvedPromise', 'rejectedPromise']
 		const maxRejectedNum = 1
 		const expectedOutput = INPUT_MUST_BE_ARRAY_OF_PROMISES
+
+		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
+
+		expect(output).rejects.toEqual(expectedOutput)
+	})
+
+	it('should reject when maxRejectedNum is not a number', () => {
+		const resolvedPromise = Promise.resolve('success')
+		const promises = [resolvedPromise, resolvedPromise]
+		const maxRejectedNum = '1'
+		const expectedOutput = MAX_REJECTED_NUM_MUST_BE_NUMBER
 
 		const output = resolvedWithRejectionNumCheck(promises, maxRejectedNum)
 

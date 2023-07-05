@@ -2,11 +2,15 @@ const {
 	INPUT_MUST_BE_ARRAY_OF_PROMISES,
 	NO_PROMISES,
 	EXCEEDS_MAX_REJECTED_NUM,
-	SUCCESS
+	SUCCESS,
+	MAX_REJECTED_NUM_MUST_BE_NUMBER
 } = require('../constants.js');
 
 function resolvedWithRejectionNumCheck(promisesToHandle, maxRejectedNum) {
 	return new Promise((resolve, reject) => {
+		if (typeof maxRejectedNum !== 'number') {
+			reject(MAX_REJECTED_NUM_MUST_BE_NUMBER);
+		}
 		if (promisesToHandle.length == 0) {
 			reject(NO_PROMISES);
 		}
